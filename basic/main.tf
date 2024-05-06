@@ -9,5 +9,5 @@ terraform {
 
 resource "local_file" "exemplo" {
   filename = "exemplo.txt"
-  content = var.file_content
+  content = "Valor string: ${var.file_content} Valor booleano: ${var.var_bool}"
 }
