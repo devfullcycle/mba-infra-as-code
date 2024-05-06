@@ -9,5 +9,5 @@ terraform {
 
 resource "local_file" "exemplo" {
   filename = "exemplo.txt"
-  content = "Hello FullCycle!"
+  content = var.file_content
 }
