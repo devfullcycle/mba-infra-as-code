@@ -1,0 +1,1 @@
+file_content = "Valor vindo do arquivo terraform.tfvars"

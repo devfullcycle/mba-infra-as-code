@@ -10,7 +10,9 @@ terraform {
 resource "local_file" "exemplo" {
   filename = "exemplo.txt"
   content = <<EOF
-Valor string: ${var.file_content} Valor booleano: ${var.var_bool}
+Conteúdo: ${var.file_content}
+
+Valor booleano: ${var.var_bool}
 
 Fruits: ${length(var.fruits)}
 
