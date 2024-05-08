@@ -4,13 +4,26 @@ terraform {
       source = "hashicorp/local"
       version = "2.5.1"
     }
+
+    random = {
+      source = "hashicorp/random"
+      version = "3.6.1"
+    }
   }
+}
+
+resource "random_pet" "meu_pet" {
+  length = 3
+  prefix = "Sr."
+  separator = " "
 }
 
 resource "local_file" "exemplo" {
   filename = "exemplo.txt"
   content = <<EOF
 Conteúdo: ${var.file_content}
+
+Meu pet: ${random_pet.meu_pet.id}
 
 Valor booleano: ${var.var_bool}
 

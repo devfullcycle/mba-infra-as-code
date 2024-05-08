@@ -1,1 +1,16 @@
-Testando
+Conteúdo: Valor vindo do arquivo variables.auto.tfvars
+
+Meu pet: Sr. strongly driving bug
+
+Valor booleano: false
+
+Fruits: 3
+
+Name: Igor
+Age: 28
+
+Name: Igor
+Age: 28
+
+Name: Igor
+Age: 28
