@@ -39,3 +39,11 @@ Name: ${var.person.name}
 Age: ${var.person.age}
 EOF
 }
+
+output "name_my_pet" {
+  value = "Esse é o nome do meu pet: ${random_pet.meu_pet.id}"
+}
+
+output "person" {
+  value = var.person  
+}
