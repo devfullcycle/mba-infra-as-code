@@ -27,3 +27,26 @@ resource "aws_instance" "example_instance" {
   instance_type = "t2.micro"
   subnet_id     = aws_subnet.example_subnet.id
 }
+
+resource "aws_internet_gateway" "example_igw" {
+  vpc_id = aws_vpc.example_vpc.id
+}
+
+resource "aws_eip" "example_ip" {
+  instance   = aws_instance.example_instance.id
+  depends_on = [ aws_internet_gateway.example_igw ]
+}
+
+resource "aws_ssm_parameter" "parameter" {
+  name  = "vm_ip"
+  type  = "String"
+  value = aws_eip.example_ip.public_ip
+}
+
+output "private_dns" {
+  value = aws_instance.example_instance.private_dns  
+}
+
+output "eip" {
+  value = aws_eip.example_ip.public_ip
+}
