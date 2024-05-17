@@ -7,6 +7,14 @@ terraform {
   }
 }
 
+data "aws_secretsmanager_secret" "secret" {
+  arn = "arn:aws:secretsmanager:us-west-2:304851244121:secret:prod/Terraform/Db-3vtdtk"
+}
+
+data "aws_secretsmanager_secret_version" "current" {
+  secret_id = data.aws_secretsmanager_secret.secret.id
+}
+
 provider "aws" {
   region     = "us-west-2"
   profile    = "default"
@@ -26,6 +34,12 @@ resource "aws_instance" "example_instance" {
   ami           = "ami-01cd4de4363ab6ee8"
   instance_type = "t2.micro"
   subnet_id     = aws_subnet.example_subnet.id
+
+  user_data = <<EOF
+#!/bin/bash
+DB_STRING="Server=${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["Host"]};DB=${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["DB"]}"
+echo $DB_STRING > test.txt
+EOF
 }
 
 resource "aws_internet_gateway" "example_igw" {
