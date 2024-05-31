@@ -49,12 +49,20 @@ resource "aws_security_group" "sg" {
   }
 }
 
-resource "aws_vpc_security_group_ingress_rule" "sg_ingress_rule" {
+resource "aws_vpc_security_group_ingress_rule" "sg_ssh_ingress_rule" {
   security_group_id = aws_security_group.sg.id
   cidr_ipv4         = "0.0.0.0/0"
   from_port         = 22
   ip_protocol       = "tcp"
   to_port           = 22
+}
+
+resource "aws_vpc_security_group_ingress_rule" "sg_http_ingress_rule" {
+  security_group_id = aws_security_group.sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 80
+  ip_protocol       = "tcp"
+  to_port           = 80
 }
 
 resource "aws_vpc_security_group_egress_rule" "sg_egress_rule" {

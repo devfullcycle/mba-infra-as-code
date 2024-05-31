@@ -1,12 +1,3 @@
-
-data "aws_secretsmanager_secret" "secret" {
-  arn = "arn:aws:secretsmanager:us-west-2:304851244121:secret:prod/Terraform/Db-3vtdtk"
-}
-
-data "aws_secretsmanager_secret_version" "current" {
-  secret_id = data.aws_secretsmanager_secret.secret.id
-}
-
 resource "aws_launch_template" "template" {
   name          = "${var.prefix}-template"
   image_id      = "ami-01cd4de4363ab6ee8"
@@ -15,8 +6,18 @@ resource "aws_launch_template" "template" {
   user_data = base64encode(
     <<EOF
 #!/bin/bash
-DB_STRING="Server=${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["Host"]};DB=${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["DB"]}"
-echo $DB_STRING > test.txt
+yum update -y
+yum install -y nginx
+systemctl start nginx
+systemctl enable nginx
+public_ip=$(curl http://checkip.amazonaws.com)
+echo "<html>
+  <head><title>Hello</title></head>
+  <body>
+    <h1>Hello, $public_ip</h1>
+  </body>
+</html>" | tee /usr/share/nginx/html/index.html > /dev/null
+systemctl restart nginx
 EOF
   )
 
