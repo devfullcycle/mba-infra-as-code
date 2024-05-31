@@ -40,6 +40,7 @@ resource "aws_autoscaling_group" "asg" {
   min_size            = 1
   max_size            = 3
   vpc_zone_identifier = var.subnet_ids
+  target_group_arns   = [aws_lb_target_group.app_tg.arn]
 
   launch_template {
     id      = aws_launch_template.template.id
@@ -94,5 +95,50 @@ resource "aws_cloudwatch_metric_alarm" "scale_in_alarm" {
 
   dimensions = {
     AutoScalingGroupName = aws_autoscaling_group.asg.name
+  }
+}
+
+resource "aws_lb" "app_lb" {
+  name               = "${var.prefix}-app-lb"
+  internal           = false
+  load_balancer_type = "application"
+  security_groups    = var.security_group_ids
+  subnets            = var.subnet_ids
+
+  enable_deletion_protection = false
+
+  tags = {
+    Name = "${var.prefix}-app-lb"
+  }
+}
+
+resource "aws_lb_target_group" "app_tg" {
+  name     = "${var.prefix}-app-tg"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = var.vpc_id
+
+  health_check {
+    healthy_threshold   = 3
+    unhealthy_threshold = 3
+    timeout             = 5
+    interval            = 30
+    path                = "/"
+    matcher             = "200"
+  }
+
+  tags = {
+    Name = "${var.prefix}-app-tg"
+  }
+}
+
+resource "aws_lb_listener" "app_lb_listener" {
+  load_balancer_arn = aws_lb.app_lb.arn
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.app_tg.arn
   }
 }

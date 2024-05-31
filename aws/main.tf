@@ -11,4 +11,5 @@ module "cluster" {
   subnet_ids         = module.network.subnet_ids
   instance_count     = var.instance_count
   security_group_ids = [module.network.security_group_id]
+  vpc_id             = module.network.vpc_id
 }
