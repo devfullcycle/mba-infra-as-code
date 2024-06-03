@@ -12,4 +12,24 @@ module "cluster" {
   instance_count     = var.instance_count
   security_group_ids = [module.network.security_group_id]
   vpc_id             = module.network.vpc_id
+  user_data = <<EOF
+#!/bin/bash
+yum update -y
+yum install -y nginx
+systemctl start nginx
+systemctl enable nginx
+public_ip=$(curl http://checkip.amazonaws.com)
+echo "<html>
+  <head><title>Hello</title></head>
+  <body>
+    <h1>Hello, $public_ip</h1>
+  </body>
+</html>" | tee /usr/share/nginx/html/index.html > /dev/null
+systemctl restart nginx
+EOF
+  desired_capacity = 2
+  min_size = 1
+  max_size = 3
+  scale_in = var.scale_in
+  scale_out = var.scale_out
 }
