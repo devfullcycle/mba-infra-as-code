@@ -34,7 +34,7 @@ class WebsiteStack(Stack):
             scale_in_adjustment=-1,
             scale_in_cooldown=60,
             scale_in_threshold=20,
-            scale_out_adjustment=-1,
+            scale_out_adjustment=1,
             scale_out_cooldown=60,
             scale_out_threshold=70
         )
