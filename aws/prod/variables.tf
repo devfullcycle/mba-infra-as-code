@@ -2,32 +2,12 @@ variable "prefix" {
   type = string
 }
 
-variable "vpc_id" {
+variable "vpc_cidr_block" {
   type = string
 }
 
-variable "subnet_ids" {
+variable "subnet_cidr_blocks" {
   type = list(string)
-}
-
-variable "security_group_ids" {
-  type = list(string)
-}
-
-variable "user_data" {
-  type = string
-}
-
-variable "desired_capacity" {
-  type = number
-}
-
-variable "min_size" {
-  type = number
-}
-
-variable "max_size" {
-  type = number
 }
 
 variable "scale_in" {

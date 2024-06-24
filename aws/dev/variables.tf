@@ -10,10 +10,6 @@ variable "subnet_cidr_blocks" {
   type = list(string)
 }
 
-variable "instance_count" {
-  type = number
-}
-
 variable "scale_in" {
   type = object({
     scaling_adjustment = number
