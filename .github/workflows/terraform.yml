@@ -52,6 +52,10 @@ on:
 permissions:
   contents: read
 
+defaults:
+  run:
+    working-directory: ./environments/dev
+
 jobs:
   terraform:
     name: 'Terraform'
@@ -84,7 +88,6 @@ jobs:
     - name: Terraform Plan
       run: terraform plan -input=false
       env:
-        TF_ACTION_WORKING_DIR: './environments/dev'
         AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
@@ -93,7 +96,6 @@ jobs:
     - name: Terraform Apply
       run: terraform apply -auto-approve
       env:
-        TF_ACTION_WORKING_DIR: './environments/dev'
         AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}s
       
