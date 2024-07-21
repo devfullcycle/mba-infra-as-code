@@ -52,10 +52,6 @@ on:
 permissions:
   contents: read
 
-defaults:
-  run:
-    working-directory: ./environments/dev
-
 jobs:
   terraform:
     name: 'Terraform'
@@ -79,6 +75,9 @@ jobs:
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       run: terraform init
+
+    - name: Terraform Change Working Dir
+      run: terraform -chdir=environments/dev apply
 
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
