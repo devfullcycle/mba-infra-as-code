@@ -14,7 +14,6 @@ terraform {
   backend "s3" {
     bucket = "fullcycle-terraform"
     key = "states/terraform.tfstate"
-    profile = "default"
     dynamodb_table = "tf-state-locking"
   }
 
@@ -24,7 +23,6 @@ terraform {
 
 provider "aws" {
   region  = "us-west-2"
-  profile = "default"
 }
 
 provider "azurerm" {
