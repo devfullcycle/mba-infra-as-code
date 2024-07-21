@@ -76,8 +76,8 @@ jobs:
     - name: Terraform Init
       run: |
         cd aws/environments/dev
-        terraform -chdir=aws/environments/dev apply
         terraform init
+        terraform -chdir=./ apply
 
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
