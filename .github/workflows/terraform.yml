@@ -52,8 +52,8 @@ jobs:
         cd aws
         directories=$(find . -type d -name "tests" -exec dirname {} \;)
         for dir in $directories; do
-          echo "Running terraform test in $dir/tests"
-          (cd "$dir/tests" && terraform init && terraform test)
+          echo "Running terraform test in $dir"
+          (cd "$dir" && terraform init && terraform test)
         done
 
     # Generates an execution plan for Terraform
