@@ -47,13 +47,13 @@ jobs:
       run: terraform -chdir=aws/environments/dev fmt -check
 
     # Run all the test
-    - name: Terraform Format
+    - name: Terraform Tests
       run: |
         cd aws
         directories=$(find . -type d -name "tests" -exec dirname {} \;)
         for dir in $directories; do
           echo "Running terraform test in $dir/tests"
-          (cd "$dir/tests" && terraform test)
+          (cd "$dir/tests" && terraform init && terraform test)
         done
 
     # Generates an execution plan for Terraform
