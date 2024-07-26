@@ -4,6 +4,11 @@ terraform {
       source  = "hashicorp/aws"
       version = "5.49.0"
     }
+
+     azurerm = {
+      source = "hashicorp/azurerm"
+      version = "3.113.0"
+    }
   }
 
   backend "s3" {
@@ -16,8 +21,11 @@ terraform {
   required_version = "~> 1.8.1"
 }
 
-
 provider "aws" {
   region  = "us-west-2"
   profile = "default"
+}
+
+provider "azurerm" {
+  features {}
 }

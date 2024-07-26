@@ -32,3 +32,8 @@ EOF
   scale_in = var.scale_in
   scale_out = var.scale_out
 }
+
+module "storage" {
+  source = "../modules/storage"
+  prefix = var.prefix
+}

@@ -4,6 +4,12 @@ terraform {
       source  = "hashicorp/aws"
       version = "5.49.0"
     }
+
+    azurerm = {
+      source = "hashicorp/azurerm"
+      version = "3.113.0"
+    }
+
   }
 
   backend "s3" {
@@ -13,11 +19,15 @@ terraform {
     dynamodb_table = "tf-state-locking"
   }
 
-  required_version = "~> 1.8.1"
+  required_version = "~> 1.9"
 }
 
 
 provider "aws" {
   region  = "us-west-2"
   profile = "default"
+}
+
+provider "azurerm" {
+  features {}
 }
