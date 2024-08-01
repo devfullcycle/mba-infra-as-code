@@ -64,3 +64,19 @@ EOF
   }
 }
 
+run "verify_http" {
+  command = apply
+
+  variables {
+    lb_arn = run.cluster.lb_arn
+  }
+
+  module {
+    source = "./testing/http"
+  }
+
+  assert {
+    condition     = data.http.lb.status_code == 200
+    error_message = "The web app is not available."
+  }
+}
