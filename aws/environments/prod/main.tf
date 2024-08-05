@@ -1,12 +1,12 @@
 module "network" {
-  source             = "../modules/network"
+  source             = "../../modules/network"
   vpc_cidr_block     = var.vpc_cidr_block
   subnet_cidr_blocks = var.subnet_cidr_blocks
   prefix             = var.prefix
 }
 
 module "cluster" {
-  source             = "../modules/cluster"
+  source             = "../../modules/cluster"
   prefix             = var.prefix
   subnet_ids         = module.network.subnet_ids
   security_group_ids = [module.network.security_group_id]
@@ -26,14 +26,14 @@ echo "<html>
 </html>" | tee /usr/share/nginx/html/index.html > /dev/null
 systemctl restart nginx
 EOF
-  desired_capacity = 1
+  desired_capacity = 2
   min_size = 1
-  max_size = 2
+  max_size = 3
   scale_in = var.scale_in
   scale_out = var.scale_out
 }
 
 module "storage" {
-  source = "../modules/storage"
+  source = "../../modules/storage"
   prefix = var.prefix
 }
