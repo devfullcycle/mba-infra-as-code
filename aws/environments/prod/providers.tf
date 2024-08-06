@@ -5,16 +5,16 @@ terraform {
       version = "5.49.0"
     }
 
-     azurerm = {
-      source = "hashicorp/azurerm"
+    azurerm = {
+      source  = "hashicorp/azurerm"
       version = "3.113.0"
     }
   }
 
   backend "s3" {
-    bucket = "fullcycle-terraform"
-    key = "states/terraform.tfstate"
-    profile = "default"
+    bucket         = "fullcycle-terraform"
+    key            = "states/terraform.tfstate"
+    profile        = "default"
     dynamodb_table = "tf-state-locking"
   }
 

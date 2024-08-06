@@ -1,5 +1,5 @@
 provider "aws" {
-  region  = "us-west-2"
+  region = "us-west-2"
 }
 
 variables {
@@ -28,7 +28,7 @@ run "network" {
 run "cluster" {
   command = apply
 
-   variables {
+  variables {
     subnet_ids         = run.network.subnet_ids
     security_group_ids = [run.network.security_group_id]
     vpc_id             = run.network.vpc_id
