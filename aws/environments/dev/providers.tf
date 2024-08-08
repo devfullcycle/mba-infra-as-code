@@ -19,7 +19,6 @@ terraform {
   backend "s3" {
     bucket         = "fullcycle-terraform"
     key            = "states/terraform.dev.tfstate"
-    profile        = "default"
     dynamodb_table = "tf-state-locking"
   }
 
