@@ -45,7 +45,7 @@ jobs:
 
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
-      run: terraform -chdir=aws/environments/dev fmt -check -recursive
+      run: terraform fmt -check -recursive
 
     # Run all the test
     - name: Terraform Tests
